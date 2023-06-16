@@ -1,23 +1,32 @@
 package com.fromacionbdi.springboot.app.productos.controller;
 
 import com.fromacionbdi.springboot.app.productos.model.entity.Producto;
-import com.fromacionbdi.springboot.app.productos.service.ProductoServiceImpl;
+import com.fromacionbdi.springboot.app.productos.service.IProductoService;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @RestController
 public class ProductoController {
+
     @Autowired
-    ProductoServiceImpl productoServiceImpl;
+    private Environment env;
+
+    @Value("${PORT:0}")
+    private Integer port;
+
+    @Autowired
+    IProductoService productoService;
 
     @GetMapping("/listar")
     public List<Producto> listar(){
-        return productoServiceImpl.findAll();
+        return productoService.findAll();
     }
 
     @GetMapping("/ver/{id}")
@@ -29,6 +38,29 @@ public class ProductoController {
         if(id.equals(7L)){
             TimeUnit.SECONDS.sleep(5L);
         }
-        return productoServiceImpl.findById(id);
+        Producto producto = productoService.findById(id);
+        producto.setPort(Integer.parseInt(env.getProperty("local.server.port")));
+        return producto;
+    }
+
+    @PostMapping("/crear")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Producto crear(@RequestBody Producto producto){
+        return productoService.save(producto);
+    }
+
+    @PutMapping("/editar/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Producto modificarProducto(@RequestBody Producto producto, @PathVariable Long id){
+        Producto productoDb = productoService.findById(id);
+        productoDb.setNombre(producto.getNombre());
+        productoDb.setPrecio(producto.getPrecio());
+        return productoService.save(productoDb);
+    }
+
+    @DeleteMapping("/eliminar/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void eliminar(@PathVariable Long id){
+        productoService.deleteProducto(id);
     }
 }
