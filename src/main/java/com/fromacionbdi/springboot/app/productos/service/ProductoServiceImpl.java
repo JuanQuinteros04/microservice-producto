@@ -1,13 +1,11 @@
 package com.fromacionbdi.springboot.app.productos.service;
 
 import com.fromacionbdi.springboot.app.productos.exceptions.NotFoundException;
-import com.fromacionbdi.springboot.app.productos.model.entity.Producto;
+import com.formacionbdi.springboot.app.commons.model.entity.Producto;
 import com.fromacionbdi.springboot.app.productos.persistence.repository.ProductoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Service

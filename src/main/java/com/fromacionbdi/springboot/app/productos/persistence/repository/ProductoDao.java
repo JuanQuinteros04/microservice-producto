@@ -1,6 +1,6 @@
 package com.fromacionbdi.springboot.app.productos.persistence.repository;
 
-import com.fromacionbdi.springboot.app.productos.model.entity.Producto;
+import com.formacionbdi.springboot.app.commons.model.entity.Producto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

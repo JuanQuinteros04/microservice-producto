@@ -1,7 +1,6 @@
 package com.fromacionbdi.springboot.app.productos.service;
 
-import com.fromacionbdi.springboot.app.productos.model.entity.Producto;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.formacionbdi.springboot.app.commons.model.entity.Producto;
 
 import java.util.List;
 
